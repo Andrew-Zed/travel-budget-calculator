@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Real-time currency conversion and travel budget planning application">
+    <meta name="theme-color" content="#667eea">
+
+    <title>Travel Budget Calculator - Plan Your Trip Smart</title>
+
+      <!-- Stylesheets -->
+    <link rel="stylesheet" href="src/styles/main.css">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='75' font-size='75'>✈️</text></svg>">
+</head>
+<body>
+  <!-- Main App Container -->
+  <div id="app" class="app-container">
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+      <div class="navbar-container">
+        <div class="navbar-brand">
+          <span class="navbar-logo">✈️</span>
+          <span class="navbar-title">Travel Budget</span>
+        </div>
+        <ul class="nav-menu" id="navMenu">
+          <li><a href="#converter" class="nav-link" data-section="converter">Converter</a></li>
+          <li><a href="#explorer" class="nav-link" data-section="explorer">Explorer</a></li>
+          <li><a href="#budget" class="nav-link" data-section="budget">Budget</a></li>
+          <li><a href="#tracker" class="nav-link" data-section="tracker">Expenses</a></li>
+          <li><a href="#trips" class="nav-link" data-section="trips">Trips</a></li>
+        </ul>
+        <div class="hamburger" id="hamburger">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <div class="container">
+        <!-- Loading State -->
+        <div id="loadingState" class="loading-state hidden">
+          <div class="spinner"></div>
+          <p>Loading...</p>
+        </div>
+
+        <!-- Error State -->
+        <div id="errorState" class="error-state hidden">
+          <div class="error-content">
+            <span class="error-icon">⚠️</span>
+            <p id="errorMessage">An error occurred</p>
+            <button class="btn btn-primary" id="errorRetry">Retry</button>
+          </div>
+        </div>
+
+        <!-- App Sections -->
+        <div id="appContent" class="app-content">
+          
+          <!-- Currency Converter Section -->
+          <section id="converter" class="section converter-section hidden">
+            <div class="section-header">
+              <h1>Currency Converter</h1>
+              <p>Convert between 150+ currencies in real-time</p>
+            </div>
+            
+            <div class="converter-container">
+              <div class="converter-box">
+                <div class="form-group">
+                  <label for="fromAmount">Amount</label>
+                  <input 
+                    type="number" 
+                    id="fromAmount" 
+                    class="input-lg" 
+                    placeholder="Enter amount"
+                    value="1"
+                    min="0"
+                    step="0.01"
+                  >
+                </div>
+
+                <div class="form-group">
+                  <label for="fromCurrency">From</label>
+                  <select id="fromCurrency" class="input-lg">
+                    <option value="USD">USD - US Dollar</option>
+                  </select>
+                </div>
+              </div>
+
+              <button class="btn-swap" id="swapBtn" title="Swap currencies">
+                <span>⇅</span>
+              </button>
+
+              <div class="converter-box">
+                <div class="form-group">
+                  <label for="toAmount">Converted Amount</label>
+                  <input 
+                    type="number" 
+                    id="toAmount" 
+                    class="input-lg" 
+                    placeholder="0.00"
+                    readonly
+                    step="0.01"
+                  >
+                </div>
+
+                <div class="form-group">
+                  <label for="toCurrency">To</label>
+                  <select id="toCurrency" class="input-lg">
+                    <option value="EUR">EUR - Euro</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="converter-info">
+              <p id="exchangeRateInfo">1 USD = Loading...</p>
+              <p id="lastUpdated" class="text-secondary">Last updated: -</p>
+            </div>
+          </section>
+
+          <!-- Destination Explorer Section -->
+          <section id="explorer" class="section explorer-section hidden">
+            <div class="section-header">
+              <h1>Destination Explorer</h1>
+              <p>Discover countries and plan your next adventure</p>
+            </div>
+
+            <div class="explorer-controls">
+              <div class="form-group">
+                <input 
+                  type="text" 
+                  id="countrySearch" 
+                  class="input-lg" 
+                  placeholder="Search countries..."
+                >
+              </div>
+
+              <div class="form-group">
+                <select id="regionFilter" class="input-lg">
+                  <option value="">All Regions</option>
+                  <option value="Africa">Africa</option>
+                  <option value="Americas">Americas</option>
+                  <option value="Asia">Asia</option>
+                  <option value="Europe">Europe</option>
+                  <option value="Oceania">Oceania</option>
+                </select>
+              </div>
+            </div>
+
+            <div id="countriesGrid" class="grid grid--3">
+              <p class="text-secondary">Loading countries...</p>
+            </div>
+          </section>
+
+          <!-- Budget Calculator Section -->
+          <section id="budget" class="section budget-section hidden">
+            <div class="section-header">
+              <h1>Budget Calculator</h1>
+              <p>Plan your trip budget across multiple destinations</p>
+            </div>
+
+            <div class="budget-controls">
+              <button class="btn btn-primary" id="addTripBtn">+ New Trip</button>
+              <div class="form-group" style="flex: 1;">
+                <input 
+                  type="text" 
+                  id="tripSearch" 
+                  class="input-lg" 
+                  placeholder="Search trips..."
+                >
+              </div>
+            </div>
+
+            <div id="tripsContainer" class="grid grid--2">
+              <p class="text-secondary">No trips yet. Create one to get started!</p>
+            </div>
+          </section>
+
+          <!-- Expense Tracker Section -->
+          <section id="tracker" class="section tracker-section hidden">
+            <div class="section-header">
+              <h1>Expense Tracker</h1>
+              <p>Track expenses by category</p>
+            </div>
+
+            <div class="tracker-controls">
+              <select id="tripSelector" class="input-lg">
+                <option value="">Select a trip...</option>
+              </select>
+            </div>
+
+            <div id="trackerContent" class="tracker-content">
+              <p class="text-secondary">Select a trip to track expenses</p>
+            </div>
+          </section>
+
+          <!-- Trip Management Section -->
+          <section id="trips" class="section trips-section hidden">
+            <div class="section-header">
+              <h1>My Trips</h1>
+              <p>View and manage all your travel plans</p>
+            </div>
+
+            <div id="tripsListContainer" class="grid grid--2">
+              <p class="text-secondary">No trips saved yet</p>
+            </div>
+          </section>
+
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <p>&copy; 2025 Travel Budget Calculator. All rights reserved.</p>
+        <p class="text-secondary">Built with vanilla JavaScript, HTML5, and CSS3</p>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Modals -->
+  <div id="countryModal" class="modal hidden">
+    <div class="modal-content">
+      <button class="modal-close" id="modalClose">&times;</button>
+      <div id="modalBody">
+        <!-- Country details will be inserted here -->
+      </div>
+    </div>
+  </div>
+
+  <div id="tripModal" class="modal hidden">
+    <div class="modal-content modal-large">
+      <button class="modal-close" id="tripModalClose">&times;</button>
+      <div id="tripModalBody">
+        <!-- Trip form will be inserted here -->
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript -->
+  <script type="module" src="src/scripts/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,186 @@
+/* Card Component */
+
+.card {
+  background: white;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.card:hover {
+  box-shadow: var(--shadow-xl);
+  transform: translateY(-8px) scale(1.02);
+}
+
+.card:hover::before {
+  opacity: 1;
+}
+
+.card-header {
+  padding: var(--spacing-lg);
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  color: white;
+}
+
+.card-body {
+  padding: var(--spacing-lg);
+}
+
+.card-footer {
+  padding: var(--spacing-lg);
+  background-color: var(--bg-secondary);
+  border-top: 1px solid var(--border-light);
+  display: flex;
+  gap: var(--spacing-md);
+  justify-content: flex-end;
+}
+
+.card-title {
+  font-size: var(--text-lg);
+  font-weight: var(--font-weight-bold);
+  margin-bottom: var(--spacing-sm);
+}
+
+.card-text {
+  color: var(--text-secondary);
+  margin-bottom: var(--spacing-sm);
+}
+
+.card-text:last-child {
+  margin-bottom: 0;
+}
+
+/* Country Card Specific Styles */
+.country-card {
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.country-card::after {
+  content: '👁️ View Details';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+  color: white;
+  padding: 2rem 1rem 1rem;
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+  text-align: center;
+  font-weight: 600;
+}
+
+.country-card:hover::after {
+  transform: translateY(0);
+}
+
+.country-card-image {
+  font-size: 4rem;
+  text-align: center;
+  padding: 2rem;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  transition: transform 0.3s ease;
+}
+
+.country-card:hover .country-card-image {
+  transform: scale(1.2) rotate(5deg);
+}
+
+/* Trip Card Styles */
+.trip-card {
+  background: white;
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-lg);
+  box-shadow: var(--shadow-md);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 2px solid transparent;
+}
+
+.trip-card:hover {
+  box-shadow: var(--shadow-xl);
+  transform: translateY(-4px);
+  border-color: var(--primary-color);
+}
+
+.trip-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: var(--spacing-md);
+}
+
+.trip-title {
+  font-size: var(--text-xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.trip-dates {
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+  margin-bottom: var(--spacing-md);
+}
+
+.trip-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-md);
+}
+
+.stat {
+  text-align: center;
+  padding: var(--spacing-md);
+  background: var(--bg-secondary);
+  border-radius: var(--radius-md);
+  transition: all 0.3s ease;
+}
+
+.stat:hover {
+  background: var(--primary-color);
+  color: white;
+  transform: translateY(-2px);
+}
+
+.stat:hover .stat-value,
+.stat:hover .stat-label {
+  color: white;
+}
+
+.stat-value {
+  font-size: var(--text-2xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--primary-color);
+  transition: color 0.3s ease;
+}
+
+.stat-label {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  margin-top: var(--spacing-xs);
+  transition: color 0.3s ease;
+}
+
+.trip-controls {
+  display: flex;
+  gap: var(--spacing-sm);
+}
